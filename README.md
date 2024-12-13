@@ -1,4 +1,3 @@
-```typescript
 # Collaborative Travel Planner Microservices Architecture
 
 ## Project Overview
