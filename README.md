@@ -11,7 +11,7 @@ A full-stack collaborative travel planning application that allows users to crea
 4. Collaboration Service
 
 ## Project Structure
-```
+```text
 travel-planner/
 │
 ├── services/
