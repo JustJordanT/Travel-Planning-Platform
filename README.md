@@ -28,141 +28,17 @@ travel-planner/
 
 ## Core GraphQL Schema (Federation)
 ```graphql
-# user-service/schema.graphql
-extend type Query {
-  user(id: ID!): User
-  users: [User]
-}
-
-type User @key(fields: "id") {
-  id: ID!
-  email: String!
-  name: String
-  trips: [Trip]
-}
-
-# trip-service/schema.graphql
-extend type Query {
-  trip(id: ID!): Trip
-  userTrips(userId: ID!): [Trip]
-}
-
-type Trip @key(fields: "id") {
-  id: ID!
-  name: String!
-  startDate: String
-  endDate: String
-  destinations: [Location]
-  collaborators: [User]
-}
-
-# location-service/schema.graphql
-extend type Query {
-  location(id: ID!): Location
-  locationsByCountry(country: String!): [Location]
-}
-
-type Location @key(fields: "id") {
-  id: ID!
-  name: String!
-  country: String!
-  coordinates: Coordinates
-  attractions: [Attraction]
-}
-
-type Coordinates {
-  latitude: Float
-  longitude: Float
-}
-
-type Attraction {
-  name: String!
-  description: String
-}
+TBD
 ```
 
 ## AWS Lambda Function Example (TypeScript)
 ```typescript
-// location-service/src/lambdas/getLocations.ts
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { LocationRepository } from '../repositories/LocationRepository';
-
-export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  try {
-    const country = event.queryStringParameters?.country;
-    const locationRepo = new LocationRepository();
-    
-    const locations = country 
-      ? await locationRepo.getLocationsByCountry(country)
-      : await locationRepo.getAllLocations();
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify(locations)
-    };
-  } catch (error) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ message: 'Error fetching locations' })
-    };
-  }
-};
+TBA
 ```
 
 ## React Frontend Component
 ```typescript
-// frontend/src/components/TripPlanner.tsx
-import React, { useState } from 'react';
-import { useQuery, gql } from '@apollo/client';
-
-const GET_USER_TRIPS = gql`
-  query GetUserTrips($userId: ID!) {
-    userTrips(userId: $userId) {
-      id
-      name
-      startDate
-      endDate
-      destinations {
-        name
-        country
-      }
-    }
-  }
-`;
-
-const TripPlanner: React.FC = () => {
-  const [userId, setUserId] = useState<string>('');
-  const { loading, error, data } = useQuery(GET_USER_TRIPS, {
-    variables: { userId },
-    skip: !userId
-  });
-
-  return (
-    <div>
-      <input 
-        type="text" 
-        value={userId}
-        onChange={(e) => setUserId(e.target.value)}
-        placeholder="Enter User ID"
-      />
-      {loading && <p>Loading trips...</p>}
-      {error && <p>Error: {error.message}</p>}
-      {data && data.userTrips.map(trip => (
-        <div key={trip.id}>
-          <h3>{trip.name}</h3>
-          <p>Dates: {trip.startDate} - {trip.endDate}</p>
-          <ul>
-            {trip.destinations.map(dest => (
-              <li key={dest.id}>{dest.name}, {dest.country}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-export default TripPlanner;
+TBA
 ```
 
 ## Key Technologies
@@ -188,8 +64,6 @@ export default TripPlanner;
 ```
 
 ```
-
-I've designed a Collaborative Travel Planner application that demonstrates a microservices architecture using Apollo GraphQL Federation, TypeScript, React, and AWS Lambdas. 
 
 The project showcases:
 - Microservices with GraphQL Federation
