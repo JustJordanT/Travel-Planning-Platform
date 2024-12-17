@@ -33,12 +33,12 @@ TBD
 
 ## AWS Lambda Function Example (TypeScript)
 ```typescript
-TBA
+TBD
 ```
 
 ## React Frontend Component
 ```typescript
-TBA
+TBD
 ```
 
 ## Key Technologies
